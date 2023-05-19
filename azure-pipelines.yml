@@ -36,7 +36,7 @@ stages:
         containerRegistry: 'ContainerRegistry-Connection'
         repository: 'k8svoteregistry'
         command: 'build'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: 'vote/Dockerfile'
         buildContext: 'vote'
         tags: '$(tag)'
         
