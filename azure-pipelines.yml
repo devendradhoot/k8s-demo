@@ -1,0 +1,62 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'ContainerRegistry-Connection'
+        repository: 'k8svoteregistry'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        buildContext: 'result'
+        tags: '$(tag)'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          cd vote
+          pwd
+          ls
+          docker build -t vote:$(tag) -f ./Dockerfile .
+
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/worker/Dockerfile'
+        tags: |
+          $(tag)
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'RG-Container-Conn'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az --version
+          az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
+          az acr login --name k8svoteregistry --username k8svoteregistry --password ITl25gcDogw6xooeLUwov1JNtJK/RGA4QOjV0QbjVg+ACRDF5a3m
+          docker tag vote:$(Build.BuildId) k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
+          docker push k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
+    
+    
