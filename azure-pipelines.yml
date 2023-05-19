@@ -28,7 +28,7 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         buildContext: 'result'
-        tags: '$(tag)'
+        tags: 'result'
     
     - task: Docker@2
       displayName: Build an image
@@ -41,16 +41,16 @@ stages:
         tags: '$(tag)'
         
 
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          cd vote
-          pwd
-          ls
-          docker build -t vote:$(tag) -f ./Dockerfile .
-          docker build -t result:$(tag) -f ./Dockerfile .
-          docker build -t worker:$(tag) -f ./Dockerfile .
+    # - task: Bash@3
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       cd vote
+    #       pwd
+    #       ls
+    #       docker build -t vote:$(tag) -f ./Dockerfile .
+    #       docker build -t result:$(tag) -f ./Dockerfile .
+    #       docker build -t worker:$(tag) -f ./Dockerfile .
 
 
     - task: Docker@2
@@ -73,8 +73,8 @@ stages:
           az acr login --name k8svoteregistry --username k8svoteregistry --password ITl25gcDogw6xooeLUwov1JNtJK/RGA4QOjV0QbjVg+ACRDF5a3m
           docker tag vote:$(Build.BuildId) k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
           docker push k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
-          docker tag result:$(Build.BuildId) k8svoteregistry.azurecr.io/result:$(Build.BuildId)
-          docker push k8svoteregistry.azurecr.io/result:$(Build.BuildId)
+          docker tag result:result k8svoteregistry.azurecr.io/result:result
+          docker push k8svoteregistry.azurecr.io/result:result
          
     
     
