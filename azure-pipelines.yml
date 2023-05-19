@@ -68,13 +68,14 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az --version
+          docker images
           az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
           az acr login --name k8svoteregistry --username k8svoteregistry --password ITl25gcDogw6xooeLUwov1JNtJK/RGA4QOjV0QbjVg+ACRDF5a3m
           docker tag vote:$(Build.BuildId) k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
           docker push k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
-          docker tag result:v1$(Build.BuildId) k8svoteregistry.azurecr.io/result:$(Build.BuildId)
+          docker tag result:$(Build.BuildId) k8svoteregistry.azurecr.io/result:$(Build.BuildId)
           docker push k8svoteregistry.azurecr.io/result:$(Build.BuildId)
-          docker tag worker:v2$(Build.BuildId) k8svoteregistry.azurecr.io/worker:$(Build.BuildId)
+          docker tag worker:$(Build.BuildId) k8svoteregistry.azurecr.io/worker:$(Build.BuildId)
           docker push k8svoteregistry.azurecr.io/worker:$(Build.BuildId)
     
     
