@@ -41,16 +41,21 @@ stages:
         tags: '$(tag)'
         
 
-    # - task: Bash@3
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #       cd vote
-    #       pwd
-    #       ls
-    #       docker build -t vote:$(tag) -f ./Dockerfile .
-    #       docker build -t result:$(tag) -f ./Dockerfile .
-    #       docker build -t worker:$(tag) -f ./Dockerfile .
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          cd vote
+          pwd
+          ls
+          docker build -t vote:$(tag) -f ./Dockerfile .
+          cd ..
+          cd result
+          docker build -t result:result -f ./Dockerfile .
+          ls
+          cd ..
+          cd worker
+          docker build -t worker:worker -f ./Dockerfile .
 
 
     # - task: Docker@2
