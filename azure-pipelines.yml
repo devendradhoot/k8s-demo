@@ -53,13 +53,23 @@ stages:
     #       docker build -t worker:$(tag) -f ./Dockerfile .
 
 
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     command: build
+    #     dockerfile: '$(Build.SourcesDirectory)/worker/Dockerfile'
+    #     tags: |
+    #       $(tag)
+
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/worker/Dockerfile'
-        tags: |
-          $(tag)
+        containerRegistry: 'ContainerRegistry-Connection'
+        repository: 'k8svoteregistry'
+        command: 'build'
+        Dockerfile: 'worker/Dockerfile'
+        buildContext: 'worker'
+        tags: '$(tag)'
 
     - task: AzureCLI@2
       inputs:
@@ -75,6 +85,8 @@ stages:
           docker push k8svoteregistry.azurecr.io/vote:$(Build.BuildId)
           docker tag result:result k8svoteregistry.azurecr.io/result:result
           docker push k8svoteregistry.azurecr.io/result:result
+          docker tag worker:worker k8svoteregistry.azurecr.io/worker:worker
+          docker push k8svoteregistry.azurecr.io/worker:worker
          
     
     
