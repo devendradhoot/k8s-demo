@@ -42,6 +42,7 @@ stages:
         
 
     - task: Bash@3
+      displayName: Build an image
       inputs:
         targetType: 'inline'
         script: |
@@ -75,6 +76,7 @@ stages:
     #     tags: 'worker'
 
     - task: AzureCLI@2
+      displayName: Push image to ACR
       inputs:
         azureSubscription: 'RG-Container-Conn'
         scriptType: 'bash'
@@ -92,6 +94,7 @@ stages:
           docker push k8svoteregistry.azurecr.io/worker:worker
     
     - task: AzureCLI@2
+      displayName: Deploy manifest files
       inputs:
         azureSubscription: 'RG-Container-Conn'
         scriptType: 'bash'
