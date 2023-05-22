@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
         - name: result-app
-          image: rohitshavili/result
+          image: k8svoteregistry.azurecr.io/result:result
           ports:
             - containerPort: 80
