@@ -30,21 +30,24 @@ stages:
     #     buildContext: 'result'
     #     tags: 'result'
     
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        containerRegistry: 'ContainerRegistry-Connection'
-        repository: 'k8svoteregistry'
-        command: 'build'
-        Dockerfile: 'vote/Dockerfile'
-        buildContext: 'vote'
-        tags: vote
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     containerRegistry: 'ContainerRegistry-Connection'
+    #     repository: 'k8svoteregistry'
+    #     command: 'build'
+    #     Dockerfile: 'vote/Dockerfile'
+    #     buildContext: 'vote'
+    #     tags: vote
         
 
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
+          cd vote
+          docker build -t vote:vote -f ./Dockerfile
+          cd ..
           cd result
           docker build -t result:result -f ./Dockerfile .
           ls
