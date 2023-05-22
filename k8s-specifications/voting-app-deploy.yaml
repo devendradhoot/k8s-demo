@@ -23,6 +23,6 @@ spec:
       - name: vote
       containers:
       - name: voting-app
-        image: k8svoteregistry.azurecr.io/vote:966
+        image: k8svoteregistry.azurecr.io/vote:vote
         ports:
         - containerPort: 80 
