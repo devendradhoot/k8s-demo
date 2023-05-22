@@ -22,3 +22,7 @@ spec:
       containers:
         - name: worker-app
           image: k8svoteregistry.azurecr.io/worker:worker
+      imagePullSecrets: 
+        - name: acr-secret
+    
+      
