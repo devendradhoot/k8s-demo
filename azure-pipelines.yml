@@ -102,4 +102,4 @@ stages:
           az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
           az aks get-credentials --resource-group RG-Containerization2 --name aks-cluster-002
           cd $(Pipeline.Workspace)/s/k8s-specifications
-          kubectl apply -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -f scaledObject-votingapp.yaml -n votingapp1
+          kubectl apply -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -n votingapp1
