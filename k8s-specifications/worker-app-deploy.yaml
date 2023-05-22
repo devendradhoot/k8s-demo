@@ -21,4 +21,4 @@ spec:
     spec:
       containers:
         - name: worker-app
-          image: akashkam/worker:latest
+          image: k8svoteregistry.azurecr.io/worker:worker
