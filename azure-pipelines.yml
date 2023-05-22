@@ -48,7 +48,7 @@ stages:
           cd vote
           pwd
           ls
-          docker build -t vote:$(tag) -f ./Dockerfile .
+          docker build -t vote:vote -f ./Dockerfile .
           cd ..
           cd result
           docker build -t result:result -f ./Dockerfile .
