@@ -26,3 +26,6 @@ spec:
         image: k8svoteregistry.azurecr.io/vote:vote
         ports:
         - containerPort: 80 
+      imagePullSecrets: 
+      - name: acr-secret
+
