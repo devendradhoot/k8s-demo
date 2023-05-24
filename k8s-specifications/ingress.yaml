@@ -16,7 +16,7 @@ spec:
             service:
               name: result-service
               port:
-                number: 80 
+                number: 80
   - host: voting.aks.k8sdemo.tk
     http:
       paths:
