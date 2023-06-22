@@ -75,23 +75,23 @@ stages:
     #     buildContext: 'worker'
     #     tags: 'worker'
 
-    - task: AzureCLI@2
-      displayName: Push image to ACR
-      inputs:
-        azureSubscription: 'RG-Container-Conn'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az --version
-          docker images
-          az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
-          az acr login --name k8svoteregistry --username k8svoteregistry --password 3dScykJ0yiW8dl2C8YWGNwfnMmnjTrdwFus/IF7ajD+ACRBf7W58
-          docker tag vote:vote k8svoteregistry.azurecr.io/vote:vote
-          docker push k8svoteregistry.azurecr.io/vote:vote
-          docker tag result:result k8svoteregistry.azurecr.io/result:result
-          docker push k8svoteregistry.azurecr.io/result:result
-          docker tag worker:worker k8svoteregistry.azurecr.io/worker:worker
-          docker push k8svoteregistry.azurecr.io/worker:worker
+    # - task: AzureCLI@2
+    #   displayName: Push image to ACR
+    #   inputs:
+    #     azureSubscription: 'RG-Container-Conn'
+    #     scriptType: 'bash'
+    #     scriptLocation: 'inlineScript'
+    #     inlineScript: |
+    #       az --version
+    #       docker images
+    #       az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
+    #       az acr login --name k8svoteregistry --username k8svoteregistry --password 3dScykJ0yiW8dl2C8YWGNwfnMmnjTrdwFus/IF7ajD+ACRBf7W58
+    #       docker tag vote:vote k8svoteregistry.azurecr.io/vote:vote
+    #       docker push k8svoteregistry.azurecr.io/vote:vote
+    #       docker tag result:result k8svoteregistry.azurecr.io/result:result
+    #       docker push k8svoteregistry.azurecr.io/result:result
+    #       docker tag worker:worker k8svoteregistry.azurecr.io/worker:worker
+    #       docker push k8svoteregistry.azurecr.io/worker:worker
     
     - task: AzureCLI@2
       displayName: Deploy manifest files
