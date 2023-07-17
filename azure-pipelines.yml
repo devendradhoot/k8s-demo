@@ -85,6 +85,7 @@ stages:
           az --version
           docker images
           az account set --subscription YASH-Azure-DevOps-Containerization1-MPN
+          az acr login --name k8svoteregistry --username k8svoteregistry --password 8zYwkevrjgEhlo1rg4TTnWo9gowwK45C6F0VzoOeNK+ACRDcN7eP
           docker tag vote:vote k8svoteregistry.azurecr.io/vote:vote
           docker push k8svoteregistry.azurecr.io/vote:vote
           docker tag result:result k8svoteregistry.azurecr.io/result:result
