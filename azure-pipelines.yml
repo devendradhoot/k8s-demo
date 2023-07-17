@@ -104,4 +104,4 @@ stages:
           az aks get-credentials --resource-group RG-Containerization1 --name akscluster-001
           cd $(Pipeline.Workspace)/s/k8s-specifications
           
-          kubectl apply -f namespace.yaml -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f ingress.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -n votingapp
+          kubectl apply -f namespace.yaml -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -n votingapp
