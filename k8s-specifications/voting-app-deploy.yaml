@@ -19,13 +19,13 @@ spec:
         name: voting-app-pod
         app: demo-voting-app
     spec:
-      imagePullSecrets:
-      - name: vote
+      # imagePullSecrets:
+      # - name: vote
       containers:
       - name: voting-app
         image: acrregistrydotnet.azurecr.io/dotnet:dotnet-862f53e
         ports:
         - containerPort: 80 
-      # imagePullSecrets: 
-      # - name: acr-secret
+      imagePullSecrets: 
+      - name: vote
 
