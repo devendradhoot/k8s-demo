@@ -41,20 +41,20 @@ stages:
     #     tags: vote
         
 
-    - task: Bash@3
-      displayName: Build an image
-      inputs:
-        targetType: 'inline'
-        script: |
-          cd vote
-          docker build -t vote:vote -f ./Dockerfile .
-          cd ..
-          cd result
-          docker build -t result:result -f ./Dockerfile .
-          ls
-          cd ..
-          cd worker
-          docker build -t worker:worker -f ./Dockerfile .
+    # - task: Bash@3
+    #   displayName: Build an image
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       cd vote
+    #       docker build -t vote:vote -f ./Dockerfile .
+    #       cd ..
+    #       cd result
+    #       docker build -t result:result -f ./Dockerfile .
+    #       ls
+    #       cd ..
+    #       cd worker
+    #       docker build -t worker:worker -f ./Dockerfile .
 
 
     # - task: Docker@2
@@ -75,23 +75,23 @@ stages:
     #     buildContext: 'worker'
     #     tags: 'worker'
 
-    - task: AzureCLI@2
-      displayName: Push image to ACR
-      inputs:
-        azureSubscription: 'RG-Container-Conn'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az --version
-          docker images
-          az account set --subscription YASH-Azure-DevOps-Containerization1-MPN
-          az acr login --name acrregistrydotnet --username acrregistrydotnet --password svM4eZK2T+1VAph9FLr/F5xNBcdfP4VSFwLXZsd4hR+ACRAovepl
-          docker tag vote:vote acrregistrydotnet.azurecr.io/vote:vote
-          docker push acrregistrydotnet.azurecr.io/vote:vote
-          docker tag result:result acrregistrydotnet.azurecr.ioo/result:result
-          docker push acrregistrydotnet.azurecr.io/result:result
-          docker tag worker:worker acrregistrydotnet.azurecr.io/worker:worker
-          docker push acrregistrydotnet.azurecr.ioo/worker:worker
+    # - task: AzureCLI@2
+    #   displayName: Push image to ACR
+    #   inputs:
+    #     azureSubscription: 'RG-Container-Conn'
+    #     scriptType: 'bash'
+    #     scriptLocation: 'inlineScript'
+    #     inlineScript: |
+    #       az --version
+    #       docker images
+    #       az account set --subscription YASH-Azure-DevOps-Containerization1-MPN
+    #       az acr login --name acrregistrydotnet --username acrregistrydotnet --password svM4eZK2T+1VAph9FLr/F5xNBcdfP4VSFwLXZsd4hR+ACRAovepl
+    #       docker tag vote:vote acrregistrydotnet.azurecr.io/vote:vote
+    #       docker push acrregistrydotnet.azurecr.io/vote:vote
+    #       docker tag result:result acrregistrydotnet.azurecr.ioo/result:result
+    #       docker push acrregistrydotnet.azurecr.io/result:result
+    #       docker tag worker:worker acrregistrydotnet.azurecr.io/worker:worker
+    #       docker push acrregistrydotnet.azurecr.ioo/worker:worker
     
     - task: AzureCLI@2
       displayName: Deploy manifest files
@@ -103,5 +103,6 @@ stages:
           az account set --subscription YASH-Azure-DevOps-Containerization2-MPN
           az aks get-credentials --resource-group RG-Containerization2 --name aks-cluster-002
           cd $(Pipeline.Workspace)/s/k8s-specifications
+          kubectl apply -f voting-app-deploy.yaml 
           
-          kubectl apply -f namespace.yaml -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -n votingapp
+          # kubectl apply -f namespace.yaml -f postgres-deploy.yaml -f postgres-service.yaml -f redis-deploy.yaml -f redis-service.yaml -f result-app-deploy.yaml -f result-app-service.yaml -f voting-app-deploy.yaml -f voting-app-service.yaml -f worker-app-deploy.yaml -n votingapp
