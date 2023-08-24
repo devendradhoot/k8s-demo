@@ -21,8 +21,8 @@ spec:
     spec:
       containers:
         - name: result-app
-          image: k8svoteregistry.azurecr.io/result:result
+          image: acrregistrydotnet.azurecr.io/result:result
           ports:
             - containerPort: 80
       imagePullSecrets: 
-        - name: acr-secret
+        - name: dotnetsecret
